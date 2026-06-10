@@ -1,15 +1,18 @@
-import { ReactNode } from "react";
-import BottomNav from "../components/mobile/BottomNav";
+import StatCard from "../components/mobile/StatCard";
+import TransactionList from "../components/mobile/TransactionList";
 
-type Props = {
-  children: ReactNode;
-};
-
-export default function MobileLayout({ children }: Props) {
+export default function MobileDashboard() {
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
-      {children}
-      <BottomNav />
+    <div className="p-4 space-y-4">
+      <h1 className="text-2xl font-bold">
+        Finance Dashboard
+      </h1>
+
+      <StatCard title="Income" amount="$4,250" />
+      <StatCard title="Expenses" amount="$1,850" />
+      <StatCard title="Profit" amount="$2,400" />
+
+      <TransactionList />
     </div>
   );
 }
