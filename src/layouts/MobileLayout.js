@@ -3,7 +3,7 @@ import { useState } from "react";
 import StatCard from "../components/mobile/StatCard";
 import TransactionList from "../components/mobile/TransactionList";
 import AddTransactionModal from "../components/mobile/AddTransactionModal";
-export default function MobileDashboard() {
+export default function MobileLayout() {
     const [transactions, setTransactions] = useState([
         { id: 1, title: "Salary", amount: 2000 },
         { id: 2, title: "Food", amount: -50 },
