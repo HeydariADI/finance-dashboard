@@ -11,37 +11,55 @@ type Props = {
 export default function TransactionList({ transactions }: Props) {
   return (
     <div className="bg-white rounded-2xl p-4 shadow-sm space-y-3">
-      
-      <h2 className="font-semibold text-gray-700">
-        Recent Transactions
-      </h2>
 
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h2 className="font-semibold text-gray-700">
+          Recent Transactions
+        </h2>
+
+        <span className="text-xs text-gray-400">
+          {transactions.length} items
+        </span>
+      </div>
+
+      {/* Empty State */}
       {transactions.length === 0 ? (
-        <p className="text-gray-400 text-sm">
-          No transactions yet
-        </p>
+        <div className="text-center py-6">
+          <p className="text-gray-400 text-sm">
+            No transactions yet
+          </p>
+          <p className="text-gray-300 text-xs mt-1">
+            Add your first transaction
+          </p>
+        </div>
       ) : (
-        transactions.map((t) => (
-          <div
-            key={t.id}
-            className="flex justify-between items-center border-b pb-2"
-          >
-            <span className="text-gray-700">
-              {t.title}
-            </span>
-
-            <span
-              className={
-                t.amount > 0
-                  ? "text-green-500 font-medium"
-                  : "text-red-500 font-medium"
-              }
+        <div className="space-y-3">
+          {transactions.map((t) => (
+            <div
+              key={t.id}
+              className="flex justify-between items-center border-b pb-2 last:border-b-0"
             >
-              {t.amount > 0 ? "+" : ""}
-              {t.amount}
-            </span>
-          </div>
-        ))
+
+              {/* Title */}
+              <span className="text-gray-700 font-medium">
+                {t.title}
+              </span>
+
+              {/* Amount */}
+              <span
+                className={`
+                  font-semibold
+                  ${t.amount > 0 ? "text-green-500" : "text-red-500"}
+                `}
+              >
+                {t.amount > 0 ? "+" : ""}
+                {t.amount.toLocaleString()}
+              </span>
+
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
