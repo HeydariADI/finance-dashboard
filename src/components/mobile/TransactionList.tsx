@@ -1,30 +1,48 @@
-import { transactions } from "../../services/transactions";
+type Transaction = {
+  id: number;
+  title: string;
+  amount: number;
+};
 
-export default function TransactionList() {
+type Props = {
+  transactions: Transaction[];
+};
+
+export default function TransactionList({ transactions }: Props) {
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm">
-      <h2 className="font-bold mb-3">Transactions</h2>
+    <div className="bg-white rounded-2xl p-4 shadow-sm space-y-3">
+      
+      <h2 className="font-semibold text-gray-700">
+        Recent Transactions
+      </h2>
 
-      <div className="space-y-3">
-        {transactions.map((t) => (
+      {transactions.length === 0 ? (
+        <p className="text-gray-400 text-sm">
+          No transactions yet
+        </p>
+      ) : (
+        transactions.map((t) => (
           <div
             key={t.id}
-            className="flex justify-between border-b pb-2"
+            className="flex justify-between items-center border-b pb-2"
           >
-            <span>{t.title}</span>
+            <span className="text-gray-700">
+              {t.title}
+            </span>
 
             <span
               className={
-                t.type === "income"
-                  ? "text-green-500"
-                  : "text-red-500"
+                t.amount > 0
+                  ? "text-green-500 font-medium"
+                  : "text-red-500 font-medium"
               }
             >
-              {t.amount}$
+              {t.amount > 0 ? "+" : ""}
+              {t.amount}
             </span>
           </div>
-        ))}
-      </div>
+        ))
+      )}
     </div>
   );
 }
