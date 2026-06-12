@@ -13,6 +13,7 @@ type Props = {
   open: boolean;
   setOpen: (value: boolean) => void;
   addTransaction: (data: { title: string; amount: number }) => void;
+  deleteTransaction: (id: number) => void;
   income: number;
   expense: number;
   profit: number;
@@ -23,32 +24,26 @@ export default function MobileDashboard({
   open,
   setOpen,
   addTransaction,
+  deleteTransaction,
   income,
   expense,
   profit,
 }: Props) {
   return (
     <div className="min-h-screen bg-slate-50 flex justify-center">
-
-      {/* container */}
       <div className="w-full max-w-md p-4 pb-24 space-y-5">
 
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-bold">
-            Hello, Adi 👋
-          </h1>
+          <h1 className="text-2xl font-bold">Hello, Adi 👋</h1>
           <p className="text-gray-500 text-sm">
             Welcome back to your finance dashboard
           </p>
         </div>
 
-        {/* Balance Card */}
+        {/* Balance */}
         <div className="bg-slate-900 text-white p-5 rounded-2xl shadow-md">
-          <p className="text-gray-400 text-sm">
-            Total Balance
-          </p>
-
+          <p className="text-gray-400 text-sm">Total Balance</p>
           <h2 className="text-3xl font-bold mt-2">
             ${profit.toLocaleString()}
           </h2>
@@ -61,25 +56,19 @@ export default function MobileDashboard({
           <StatCard title="Profit" amount={`$${profit}`} />
         </div>
 
-        {/* Action Button */}
+        {/* Add */}
         <button
           onClick={() => setOpen(true)}
-          className="
-            w-full
-            bg-blue-600
-            text-white
-            py-3
-            rounded-xl
-            font-medium
-            active:scale-[0.98]
-            transition
-          "
+          className="w-full bg-blue-600 text-white py-3 rounded-xl font-medium active:scale-[0.98] transition"
         >
           + Add Transaction
         </button>
 
-        {/* Transactions */}
-        <TransactionList transactions={transactions} />
+        {/* List */}
+        <TransactionList
+          transactions={transactions}
+          onDelete={deleteTransaction}
+        />
 
         {/* Modal */}
         {open && (

@@ -6,60 +6,60 @@ type Transaction = {
 
 type Props = {
   transactions: Transaction[];
+  onDelete?: (id: number) => void;
 };
 
-export default function TransactionList({ transactions }: Props) {
+export default function TransactionList({
+  transactions,
+  onDelete,
+}: Props) {
   return (
     <div className="bg-white rounded-2xl p-4 shadow-sm space-y-3">
 
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="font-semibold text-gray-700">
-          Recent Transactions
-        </h2>
+      <h2 className="font-semibold text-gray-700">
+        Recent Transactions
+      </h2>
 
-        <span className="text-xs text-gray-400">
-          {transactions.length} items
-        </span>
-      </div>
-
-      {/* Empty State */}
       {transactions.length === 0 ? (
-        <div className="text-center py-6">
-          <p className="text-gray-400 text-sm">
-            No transactions yet
-          </p>
-          <p className="text-gray-300 text-xs mt-1">
-            Add your first transaction
-          </p>
-        </div>
+        <p className="text-gray-400 text-sm">
+          No transactions yet
+        </p>
       ) : (
-        <div className="space-y-3">
-          {transactions.map((t) => (
-            <div
-              key={t.id}
-              className="flex justify-between items-center border-b pb-2 last:border-b-0"
-            >
-
-              {/* Title */}
-              <span className="text-gray-700 font-medium">
+        transactions.map((t) => (
+          <div
+            key={t.id}
+            className="flex justify-between items-center border-b pb-2"
+          >
+            <div>
+              <span className="text-gray-700">
                 {t.title}
               </span>
+            </div>
 
-              {/* Amount */}
+            <div className="flex items-center gap-3">
               <span
-                className={`
-                  font-semibold
-                  ${t.amount > 0 ? "text-green-500" : "text-red-500"}
-                `}
+                className={
+                  t.amount > 0
+                    ? "text-green-500 font-medium"
+                    : "text-red-500 font-medium"
+                }
               >
                 {t.amount > 0 ? "+" : ""}
-                {t.amount.toLocaleString()}
+                {t.amount}
               </span>
 
+              {/* Delete button */}
+              {onDelete && (
+                <button
+                  onClick={() => onDelete(t.id)}
+                  className="text-red-500 text-xs"
+                >
+                  Delete
+                </button>
+              )}
             </div>
-          ))}
-        </div>
+          </div>
+        ))
       )}
     </div>
   );

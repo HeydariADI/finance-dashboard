@@ -1,5 +1,5 @@
-import TransactionList from "../../components/mobile/TransactionList";
 import StatCard from "../../components/mobile/StatCard";
+import TransactionList from "../../components/mobile/TransactionList";
 
 type Transaction = {
   id: number;
@@ -9,6 +9,7 @@ type Transaction = {
 
 type Props = {
   transactions: Transaction[];
+  deleteTransaction: (id: number) => void;
   income: number;
   expense: number;
   profit: number;
@@ -16,6 +17,7 @@ type Props = {
 
 export default function DesktopDashboard({
   transactions,
+  deleteTransaction,
   income,
   expense,
   profit,
@@ -24,20 +26,20 @@ export default function DesktopDashboard({
     <div className="min-h-screen bg-slate-100 flex">
 
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r p-5 hidden lg:block">
+      <aside className="w-64 bg-white border-r p-5">
         <h2 className="text-xl font-bold mb-8">
-          Finance Panel
+          Finance App
         </h2>
 
         <nav className="space-y-4 text-gray-600">
-          <p className="font-medium text-blue-600">Dashboard</p>
+          <p className="font-semibold text-blue-600">Dashboard</p>
           <p>Transactions</p>
-          <p>Reports</p>
+          <p>Analytics</p>
           <p>Settings</p>
         </nav>
       </aside>
 
-      {/* Main Content */}
+      {/* Main */}
       <main className="flex-1 p-8 space-y-6">
 
         {/* Header */}
@@ -46,7 +48,7 @@ export default function DesktopDashboard({
             Dashboard Overview
           </h1>
           <p className="text-gray-500">
-            Welcome back 👋 here is your financial summary
+            Financial analytics & overview
           </p>
         </div>
 
@@ -57,28 +59,31 @@ export default function DesktopDashboard({
           <StatCard title="Profit" amount={`$${profit}`} />
         </div>
 
-        {/* Two column layout */}
+        {/* Content Grid */}
         <div className="grid grid-cols-3 gap-6">
 
           {/* Transactions */}
           <div className="col-span-2">
-            <TransactionList transactions={transactions} />
+            <TransactionList
+              transactions={transactions}
+              onDelete={deleteTransaction}
+            />
           </div>
 
-          {/* Analytics Panel */}
+          {/* Analytics */}
           <div className="bg-white rounded-2xl p-5 shadow-sm">
             <h3 className="font-semibold mb-4">
               Analytics
             </h3>
 
             <div className="space-y-3 text-sm text-gray-600">
-              <p>📈 Monthly Growth</p>
-              <p>💰 Cash Flow</p>
-              <p>📊 Spending Trends</p>
+              <p>📈 Income trends</p>
+              <p>💰 Expense tracking</p>
+              <p>📊 Monthly report</p>
             </div>
 
             <div className="mt-6 bg-slate-100 p-4 rounded-xl text-center text-gray-400">
-              Chart Area (next step)
+              Chart coming soon 📊
             </div>
           </div>
 

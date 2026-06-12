@@ -7,7 +7,14 @@ export type Transaction = {
   amount: number;
 };
 
+
+
 export default function useDashboard() {
+    const deleteTransaction = (id: number) => {
+  setTransactions((prev) =>
+    prev.filter((t) => t.id !== id)
+  );
+};
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [open, setOpen] = useState(false);
 
@@ -54,13 +61,14 @@ export default function useDashboard() {
 
   const profit = income - expense;
 
-  return {
-    transactions,
-    open,
-    setOpen,
-    addTransaction,
-    income,
-    expense,
-    profit,
-  };
+ return {
+  transactions,
+  open,
+  setOpen,
+  addTransaction,
+  deleteTransaction, // 👈 اضافه شد
+  income,
+  expense,
+  profit,
+};
 }
