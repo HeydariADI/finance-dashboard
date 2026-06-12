@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { loadFromStorage, saveToStorage } from "../../utils/storage";
 
 export type Transaction = {
   id: number;
@@ -7,13 +8,28 @@ export type Transaction = {
 };
 
 export default function useDashboard() {
-  const [transactions, setTransactions] = useState<Transaction[]>([
-    { id: 1, title: "Salary", amount: 2000 },
-    { id: 2, title: "Food", amount: -50 },
-    { id: 3, title: "Freelance", amount: 500 },
-  ]);
-
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [open, setOpen] = useState(false);
+
+  // load initial data
+  useEffect(() => {
+    const data = loadFromStorage();
+
+    if (data) {
+      setTransactions(data);
+    } else {
+      setTransactions([
+        { id: 1, title: "Salary", amount: 2000 },
+        { id: 2, title: "Food", amount: -50 },
+        { id: 3, title: "Freelance", amount: 500 },
+      ]);
+    }
+  }, []);
+
+  // save on change
+  useEffect(() => {
+    saveToStorage(transactions);
+  }, [transactions]);
 
   const addTransaction = (data: {
     title: string;
